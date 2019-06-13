@@ -19,7 +19,7 @@ public class Home {
 	private JFrame frame;
 
 	/**
-	 * Launch the application.
+	 * Launch the application. Hola
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
