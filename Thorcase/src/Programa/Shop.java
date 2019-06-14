@@ -6,11 +6,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.DriverManager;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +25,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import java.sql.Connection;
 
 public class Shop extends JFrame {
 
@@ -122,19 +127,19 @@ public class Shop extends JFrame {
 		contentPane.add(label);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Caja Horizonte", "Caja Bravo", "Caja Espectro", "Caja Clutch", "Caja Delta"}));
-		comboBox.setBounds(112, 165, 138, 20);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Horizonte", "Bravo", "Espectro", "Clutch", "Delta"}));
+		comboBox.setBounds(190, 166, 102, 20);
 		contentPane.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-		comboBox_1.setBounds(351, 165, 45, 20);
+		comboBox_1.setBounds(380, 166, 45, 20);
 		contentPane.add(comboBox_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Caja:");
 		lblNewLabel_2.setForeground(new Color(0, 102, 204));
 		lblNewLabel_2.setFont(new Font("Source Code Pro", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(62, 161, 85, 27);
+		lblNewLabel_2.setBounds(140, 162, 85, 27);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
@@ -145,31 +150,47 @@ public class Shop extends JFrame {
 		JLabel lblCantidad = new JLabel("Cantidad:");
 		lblCantidad.setForeground(new Color(0, 102, 204));
 		lblCantidad.setFont(new Font("Source Code Pro", Font.PLAIN, 14));
-		lblCantidad.setBounds(273, 161, 85, 27);
+		lblCantidad.setBounds(302, 162, 85, 27);
 		contentPane.add(lblCantidad);
 		
 		JButton btnComprar = new JButton("Buy");
 		btnComprar.setForeground(Color.WHITE);
 		btnComprar.setBackground(Color.RED);
-		btnComprar.setBounds(417, 165, 102, 21);
+		btnComprar.setBounds(446, 166, 102, 21);
 		contentPane.add(btnComprar);
 		
 		JButton btnVerPrecio = new JButton("Price");
+		btnVerPrecio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+		            // This will load the MySQL driver, each DB has its own driver
+		            Class.forName("com.mysql.cj.jdbc.Driver");
+		            // Setup the connection with the DB
+		            Connection connect = DriverManager
+		                    .getConnection("jdbc:mysql://localhost/liga_examen?user=root&password=1234"
+		                    		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+
+		            
+				 } catch (Exception e) {
+					 JOptionPane.showMessageDialog(null, e, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);;
+			        }
+			}
+		});
 		btnVerPrecio.setForeground(Color.WHITE);
 		btnVerPrecio.setBackground(new Color(41, 76, 255));
-		btnVerPrecio.setBounds(228, 209, 68, 21);
+		btnVerPrecio.setBounds(267, 209, 68, 21);
 		contentPane.add(btnVerPrecio);
 		
 		textField = new JTextField();
 		textField.setEditable(false);
-		textField.setBounds(313, 209, 45, 20);
+		textField.setBounds(352, 209, 45, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel label_1 = new JLabel("\u20AC");
 		label_1.setForeground(new Color(0, 102, 204));
 		label_1.setFont(new Font("Source Code Pro", Font.PLAIN, 14));
-		label_1.setBounds(368, 208, 24, 20);
+		label_1.setBounds(407, 208, 24, 20);
 		contentPane.add(label_1);
 		
 		
