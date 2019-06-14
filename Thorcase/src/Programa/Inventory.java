@@ -18,6 +18,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Inventory extends JFrame {
 
@@ -71,12 +73,23 @@ public class Inventory extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Inventory");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(new Color(41, 76, 255));
 		btnNewButton.setBounds(0, 84, 226, 32);
 		contentPane.add(btnNewButton);
 		
 		JButton btnShop = new JButton("Shop");
+		btnShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Shop tienda = new Shop();
+				tienda.setVisible(true);
+			}
+		});
 		btnShop.setForeground(Color.WHITE);
 		btnShop.setBackground(new Color(41, 76, 255));
 		btnShop.setBounds(224, 84, 250, 32);

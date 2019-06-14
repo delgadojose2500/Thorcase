@@ -50,7 +50,7 @@ public class Shop extends JFrame {
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
 		contentPane = new JPanel();
-		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("X");
