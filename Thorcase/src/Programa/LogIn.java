@@ -23,7 +23,7 @@ public class LogIn extends JFrame {
 
 	private JPanel registerFrame;
 	private JTextField userTxt;
-	private JTextField passwdTxt;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -79,7 +79,13 @@ public class LogIn extends JFrame {
 		lblNewLabel_3.setIcon(new ImageIcon(SignUp.class.getResource("/Archivos/2.jpg")));
 		panel.add(lblNewLabel_3);
 		
-		JButton btnClear = new JButton("Clear FIelds");
+		JButton btnClear = new JButton("Clear Fields");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userTxt.setText("");
+				passwordField.setText("");
+			}
+		});
 		btnClear.setBackground(Color.BLACK);
 		btnClear.setForeground(Color.WHITE);
 		btnClear.setBounds(19, 365, 120, 31);
@@ -99,6 +105,13 @@ public class LogIn extends JFrame {
 		panel.add(btnNewButton_1);
 		
 		JButton btnregister = new JButton("Register");
+		btnregister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				SignUp register = new SignUp();
+				register.setVisible(true);
+			}
+		});
 		btnregister.setForeground(Color.WHITE);
 		btnregister.setBackground(Color.BLACK);
 		btnregister.setBounds(149, 365, 121, 31);
@@ -139,9 +152,8 @@ public class LogIn extends JFrame {
 		registerFrame.add(userTxt);
 		userTxt.setColumns(10);
 		
-		passwdTxt = new JTextField();
-		passwdTxt.setColumns(10);
-		passwdTxt.setBounds(344, 225, 289, 32);
-		registerFrame.add(passwdTxt);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(344, 225, 289, 32);
+		registerFrame.add(passwordField);
 	}
 }

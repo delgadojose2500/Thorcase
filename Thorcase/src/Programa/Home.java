@@ -46,7 +46,7 @@ public class Home {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(400, 180, 700, 473);
+		frame.setBounds(400, 180, 700, 470);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
@@ -126,7 +126,7 @@ public class Home {
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setIcon(new ImageIcon(Home.class.getResource("/Archivos/FondoHome2.jpg")));
-		lblNewLabel_3.setBounds(0, 0, 700, 462);
+		lblNewLabel_3.setBounds(0, 0, 700, 473);
 		frame.getContentPane().add(lblNewLabel_3);
 	}
 }

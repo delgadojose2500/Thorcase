@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -82,6 +83,13 @@ public class SignUp extends JFrame {
 		panel.add(lblNewLabel_3);
 		
 		JButton btnNewButton_2 = new JButton("Clear FIelds");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TxtUser.setText("");
+				password1.setText("");
+				passwordRepeat.setText("");
+			}
+		});
 		btnNewButton_2.setBackground(Color.BLACK);
 		btnNewButton_2.setForeground(Color.WHITE);
 		btnNewButton_2.setBounds(19, 365, 120, 31);
@@ -101,6 +109,15 @@ public class SignUp extends JFrame {
 		panel.add(btnNewButton_1);
 		
 		JButton btnComprobarUsuario = new JButton("Passw check");
+		btnComprobarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(String.valueOf(password1.getText()).compareTo(String.valueOf(passwordRepeat.getText())) == 0) {
+					JOptionPane.showMessageDialog(null, "Las contraseñas coinciden", "Password Checker", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Password Checker", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnComprobarUsuario.setForeground(Color.WHITE);
 		btnComprobarUsuario.setBackground(Color.BLACK);
 		btnComprobarUsuario.setBounds(149, 365, 121, 31);

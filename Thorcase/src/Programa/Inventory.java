@@ -86,7 +86,7 @@ public class Inventory extends JFrame {
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Shop tienda = new Shop();
+				Shop tienda = new Shop("");//poner el id usuario
 				tienda.setVisible(true);
 			}
 		});
@@ -96,6 +96,13 @@ public class Inventory extends JFrame {
 		contentPane.add(btnShop);
 		
 		JButton btnTransferToSteam = new JButton("View Skins");
+		btnTransferToSteam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				Skins skins = new Skins("");//poner el id usuario
+				skins.setVisible(true);
+			}
+		});
 		btnTransferToSteam.setForeground(Color.WHITE);
 		btnTransferToSteam.setBackground(new Color(41, 76, 255));
 		btnTransferToSteam.setBounds(474, 84, 226, 32);

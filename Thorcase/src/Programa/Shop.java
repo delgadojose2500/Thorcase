@@ -20,11 +20,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Shop extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private String idUser;
 
 	/**
 	 * Launch the application.
@@ -33,7 +36,7 @@ public class Shop extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Shop frame = new Shop();
+					Shop frame = new Shop("");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +48,8 @@ public class Shop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Shop() {
+	public Shop(String iduser) {
+		this.idUser = idUser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
@@ -71,6 +75,13 @@ public class Shop extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Inventory");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				Inventory inventario = new Inventory("");//poner el id usuario
+				inventario.setVisible(true);
+			}
+		});
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(new Color(41, 76, 255));
 		btnNewButton.setBounds(0, 84, 226, 32);
@@ -83,6 +94,13 @@ public class Shop extends JFrame {
 		contentPane.add(btnShop);
 		
 		JButton btnTransferToSteam = new JButton("View Skins");
+		btnTransferToSteam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Skins skins = new Skins("");//poner el id usuario
+				skins.setVisible(true);
+			}
+		});
 		btnTransferToSteam.setForeground(Color.WHITE);
 		btnTransferToSteam.setBackground(new Color(41, 76, 255));
 		btnTransferToSteam.setBounds(474, 84, 226, 32);

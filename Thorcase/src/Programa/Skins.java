@@ -20,11 +20,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Skins extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private String idUser;
 
 	/**
 	 * Launch the application.
@@ -33,7 +36,7 @@ public class Skins extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Skins frame = new Skins();
+					Skins frame = new Skins("");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +48,8 @@ public class Skins extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Skins() {
+	public Skins(String idUser) {
+		this.idUser = idUser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
@@ -72,12 +76,26 @@ public class Skins extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Inventory");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Inventory inventario = new Inventory("");//poner el id usuario
+				inventario.setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(0, 84, 226, 32);
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(new Color(41, 76, 255));
 		contentPane.add(btnNewButton);
 		
 		JButton btnShop = new JButton("Shop");
+		btnShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Shop tienda = new Shop("");//poner el id usuario
+				tienda.setVisible(true);
+			}
+		});
 		btnShop.setBounds(224, 84, 250, 32);
 		btnShop.setForeground(Color.WHITE);
 		btnShop.setBackground(new Color(41, 76, 255));
