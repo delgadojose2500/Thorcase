@@ -113,6 +113,11 @@ public class LogIn extends JFrame {
 		registerFrame.add(lblPassword);
 		
 		JButton btnLogIn = new JButton("LogIn");
+		btnLogIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnLogIn.setForeground(Color.WHITE);
 		btnLogIn.setBackground(new Color(41, 76, 255));
 		btnLogIn.setBounds(344, 268, 289, 32);

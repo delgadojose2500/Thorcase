@@ -23,6 +23,7 @@ public class Inventory extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private String idUser;
 
 	/**
 	 * Launch the application.
@@ -31,7 +32,7 @@ public class Inventory extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Inventory frame = new Inventory();
+					Inventory frame = new Inventory("");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,12 +44,13 @@ public class Inventory extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Inventory() {
+	public Inventory(String iduser) {
+		this.idUser = idUser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
 		contentPane = new JPanel();
-		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -108,13 +110,26 @@ public class Inventory extends JFrame {
 			new String[] {
 				"Cajas", "Cantidad"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		table.setBounds(22, 140, 346, 109);
 		contentPane.add(table);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 133, 366, 107);
+		scrollPane.setBounds(38, 218, 295, 108);
 		contentPane.add(scrollPane);
+		
+		JButton btnTransferToSteam_1 = new JButton("Transfer to Steam");
+		btnTransferToSteam_1.setForeground(Color.WHITE);
+		btnTransferToSteam_1.setBackground(new Color(41, 76, 255));
+		btnTransferToSteam_1.setBounds(396, 215, 250, 111);
+		contentPane.add(btnTransferToSteam_1);
 		
 		
 
