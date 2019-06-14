@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
@@ -146,6 +147,12 @@ public class Inventory extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JButton btnTransferToSteam_1 = new JButton("Transfer to Steam");
+		btnTransferToSteam_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Esta funcionalidad sera implementada en un futuro", 
+												"Error", JOptionPane.WARNING_MESSAGE);
+			}
+		});
 		btnTransferToSteam_1.setForeground(Color.WHITE);
 		btnTransferToSteam_1.setBackground(new Color(41, 76, 255));
 		btnTransferToSteam_1.setBounds(396, 215, 250, 111);
