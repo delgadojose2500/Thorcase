@@ -14,46 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/Archivos/1.png</name>
-			<type>1</type>
-			<location>F:/Thorcase/1.png</location>
-		</link>
-		<link>
-			<name>src/Archivos/2.jpg</name>
-			<type>1</type>
-			<location>F:/Thorcase/2.jpg</location>
-		</link>
-		<link>
-			<name>src/Archivos/3.png</name>
-			<type>1</type>
-			<location>F:/Thorcase/3.png</location>
-		</link>
-		<link>
-			<name>src/Archivos/FondoHome.jpg</name>
-			<type>1</type>
-			<location>F:/Thorcase/FondoHome.jpg</location>
-		</link>
-		<link>
-			<name>src/Archivos/FondoHome2.jpg</name>
-			<type>1</type>
-			<location>F:/Thorcase/FondoHome2.jpg</location>
-		</link>
-		<link>
-			<name>src/Archivos/LogIn (2).png</name>
-			<type>1</type>
-			<location>F:/Thorcase/LogIn (2).png</location>
-		</link>
-		<link>
-			<name>src/Archivos/LogIn.png</name>
-			<type>1</type>
-			<location>F:/Thorcase/LogIn.png</location>
-		</link>
-		<link>
-			<name>src/Archivos/Register.png</name>
-			<type>1</type>
-			<location>F:/Thorcase/Register.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>
