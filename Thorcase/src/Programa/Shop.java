@@ -25,7 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.sql.CallableStatement;
 import java.sql.Connection;
 
 public class Shop extends JFrame {
@@ -126,15 +126,15 @@ public class Shop extends JFrame {
 		label.setBounds(0, 0, 0, 0);
 		contentPane.add(label);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Horizonte", "Bravo", "Espectro", "Clutch", "Delta"}));
-		comboBox.setBounds(190, 166, 102, 20);
-		contentPane.add(comboBox);
+		JComboBox comboBoxCajas = new JComboBox();
+		comboBoxCajas.setModel(new DefaultComboBoxModel(new String[] {"Horizonte", "Bravo", "Espectro", "Clutch", "Delta"}));
+		comboBoxCajas.setBounds(190, 166, 102, 20);
+		contentPane.add(comboBoxCajas);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-		comboBox_1.setBounds(380, 166, 45, 20);
-		contentPane.add(comboBox_1);
+		JComboBox comboBoxCant = new JComboBox();
+		comboBoxCant.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		comboBoxCant.setBounds(380, 166, 45, 20);
+		contentPane.add(comboBoxCant);
 		
 		JLabel lblNewLabel_2 = new JLabel("Caja:");
 		lblNewLabel_2.setForeground(new Color(0, 102, 204));
@@ -163,12 +163,37 @@ public class Shop extends JFrame {
 		btnVerPrecio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-		            // This will load the MySQL driver, each DB has its own driver
-		            Class.forName("com.mysql.cj.jdbc.Driver");
-		            // Setup the connection with the DB
-		            Connection connect = DriverManager
-		                    .getConnection("jdbc:mysql://localhost/liga_examen?user=root&password=1234"
-		                    		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+					Connection connect = null;
+			        
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+				    connect = DriverManager
+		                   .getConnection("jdbc:mysql://localhost/thorcase?"
+		                           + "user=root&password=1234"
+		                   		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+				    
+				    CallableStatement cstmt =  connect.prepareCall("{call thorcase.sp_precioCajas(?, ?, ?)}");
+		            String caja = "";
+				    if(comboBoxCajas.getSelectedIndex() == 0) {
+				    	caja = "Horizonte";
+				    }else if(comboBoxCajas.getSelectedIndex() == 1) {
+				    	caja = "Bravo";
+				    }else if(comboBoxCajas.getSelectedIndex() == 2) {
+				    	caja = "Espectro";
+				    }else if(comboBoxCajas.getSelectedIndex() == 3) {
+				    	caja = "Clutch";
+				    }else if(comboBoxCajas.getSelectedIndex() == 4) {
+				    	caja = "Delta";
+				    }
+				    
+				    cstmt.setString(1, caja);
+				    cstmt.setInt(2, comboBoxCant.getSelectedIndex()+1);
+				    cstmt.registerOutParameter("precioCaja", java.sql.Types.DOUBLE);
+				                
+				    cstmt.execute();
+				    
+				    textField.setText(String.valueOf(cstmt.getFloat("precioCaja")));
+				              
+				    cstmt.close();
 
 		            
 				 } catch (Exception e) {
