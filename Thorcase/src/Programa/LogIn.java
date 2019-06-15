@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -117,6 +118,15 @@ public class LogIn extends JFrame {
 		btnregister.setBounds(149, 365, 121, 31);
 		panel.add(btnregister);
 		
+		userTxt = new JTextField();
+		userTxt.setBounds(344, 164, 289, 32);
+		registerFrame.add(userTxt);
+		userTxt.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(344, 225, 289, 32);
+		registerFrame.add(passwordField);
+		
 		JLabel lblNewLabel_1 = new JLabel("USER");
 		lblNewLabel_1.setBounds(344, 146, 289, 14);
 		registerFrame.add(lblNewLabel_1);
@@ -147,13 +157,5 @@ public class LogIn extends JFrame {
 		lblNewLabel_4.setBounds(344, 110, 289, 25);
 		registerFrame.add(lblNewLabel_4);
 		
-		userTxt = new JTextField();
-		userTxt.setBounds(344, 164, 289, 32);
-		registerFrame.add(userTxt);
-		userTxt.setColumns(10);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(344, 225, 289, 32);
-		registerFrame.add(passwordField);
 	}
 }
