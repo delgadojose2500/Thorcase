@@ -87,7 +87,7 @@ public class Inventory extends JFrame {
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Shop tienda = new Shop("");//poner el id usuario
+				Shop tienda = new Shop(idUser);//poner el id usuario
 				tienda.setVisible(true);
 			}
 		});
@@ -100,7 +100,7 @@ public class Inventory extends JFrame {
 		btnTransferToSteam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				Skins skins = new Skins("");//poner el id usuario
+				Skins skins = new Skins(idUser);//poner el id usuario
 				skins.setVisible(true);
 			}
 		});

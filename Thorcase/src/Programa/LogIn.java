@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +30,7 @@ public class LogIn extends JFrame {
 	private JPanel registerFrame;
 	private JTextField userTxt;
 	private JPasswordField passwordField;
+	private String idUser;
 
 	/**
 	 * Launch the application.
@@ -138,7 +144,35 @@ public class LogIn extends JFrame {
 		JButton btnLogIn = new JButton("LogIn");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				try {
+					Connection connect = null;
+					Statement query = null;
+			        
+					String user = userTxt.getText();
+					String pass = String.valueOf(passwordField.getText());
+					String consulta = "select idUsuario, Usuario, Contraseña from usuarios where Usuario = '" + user + "';";
+					
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+				    connect = DriverManager
+		                   .getConnection("jdbc:mysql://localhost/thorcase?"
+		                           + "user=root&password=1234"
+		                   		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+				    
+				    query =connect.createStatement();//enviar consulta a bbdd
+			        ResultSet resultado=  query.executeQuery(consulta);
+				    
+			        if(resultado.next()) {
+			        	if(pass.equals(resultado.getString(3))) {
+			        		idUser = resultado.getString(1);
+			        		dispose();
+			        		Inventory inventario = new Inventory(idUser);
+			        		inventario.setVisible(true);
+			        	}
+			        }
+		            
+				 } catch (Exception e) {
+					 JOptionPane.showMessageDialog(null, e, "Error al iniciar sesion", JOptionPane.ERROR_MESSAGE);
+			        }
 			}
 		});
 		btnLogIn.setForeground(Color.WHITE);

@@ -83,7 +83,7 @@ public class Shop extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				Inventory inventario = new Inventory("");//poner el id usuario
+				Inventory inventario = new Inventory(idUser);//poner el id usuario
 				inventario.setVisible(true);
 			}
 		});
@@ -102,7 +102,7 @@ public class Shop extends JFrame {
 		btnTransferToSteam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Skins skins = new Skins("");//poner el id usuario
+				Skins skins = new Skins(idUser);//poner el id usuario
 				skins.setVisible(true);
 			}
 		});
@@ -197,7 +197,7 @@ public class Shop extends JFrame {
 
 		            
 				 } catch (Exception e) {
-					 JOptionPane.showMessageDialog(null, e, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);;
+					 JOptionPane.showMessageDialog(null, e, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);
 			        }
 			}
 		});

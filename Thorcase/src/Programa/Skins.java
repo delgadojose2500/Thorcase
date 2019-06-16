@@ -79,7 +79,7 @@ public class Skins extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Inventory inventario = new Inventory("");//poner el id usuario
+				Inventory inventario = new Inventory(idUser);//poner el id usuario
 				inventario.setVisible(true);
 			}
 		});
@@ -92,7 +92,7 @@ public class Skins extends JFrame {
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Shop tienda = new Shop("");//poner el id usuario
+				Shop tienda = new Shop(idUser);//poner el id usuario
 				tienda.setVisible(true);
 			}
 		});
