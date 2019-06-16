@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +26,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -181,6 +194,66 @@ public class Skins extends JFrame {
 		btnSearch.setBackground(new Color(41, 76, 255));
 		btnSearch.setBounds(301, 153, 133, 20);
 		contentPane.add(btnSearch);
+		
+		JButton btnXML = new JButton("Export to XML");
+		btnXML.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getValueAt(0, 0) != null && table.getValueAt(0, 1) != null && table.getValueAt(0, 2) != null && table.getValueAt(0, 3) != null) {
+					JFileChooser FC = new JFileChooser();
+					String ruta = "";
+					
+					int seleccion = FC.showSaveDialog(Skins.this);
+					
+					if(seleccion == JFileChooser.APPROVE_OPTION) {
+						ruta = FC.getSelectedFile().getAbsolutePath();
+						ruta = ruta + ".xml";
+					}
+					
+					try {
+				         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				         Document doc = dBuilder.newDocument();
+				         
+				         Element rootElement = doc.createElement("Armas");
+				         doc.appendChild(rootElement);
+	
+				         Element arma = doc.createElement(String.valueOf(table.getValueAt(0, 3)));
+				         rootElement.appendChild(arma);
+	
+				         
+				         for(int k=0;k<table.getRowCount();k++) {
+				        	 if(table.getValueAt(k, 0) != null && table.getValueAt(k, 1) != null && table.getValueAt(k, 2) != null && table.getValueAt(k, 3) != null) {
+				        		 Element skin = doc.createElement("Skin");
+				        		 Attr rareza = doc.createAttribute("Rareza");
+				        		 rareza.setValue(String.valueOf(table.getValueAt(k, 1)));
+						         skin.setAttributeNode(rareza);
+						         Attr precio = doc.createAttribute("Precio");
+						         precio.setValue(String.valueOf(table.getValueAt(k, 2)));
+						         skin.setAttributeNode(precio);
+						         skin.appendChild(doc.createTextNode(String.valueOf(table.getValueAt(k, 0))));
+						         arma.appendChild(skin);
+				        	 }
+				         }
+	
+				         // write the content into xml file
+				         TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				         Transformer transformer = transformerFactory.newTransformer();
+				         DOMSource source = new DOMSource(doc);
+				         StreamResult result = new StreamResult(new File(ruta));
+				         transformer.transform(source, result);
+	
+				      } catch (Exception exc) {
+				    	  JOptionPane.showMessageDialog(null, exc, "Error al exportar el xml", JOptionPane.ERROR_MESSAGE);
+				      }
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecciona un arma para exportar XML.", "Error al exportar", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		btnXML.setForeground(Color.WHITE);
+		btnXML.setBackground(new Color(41, 76, 255));
+		btnXML.setBounds(514, 152, 133, 20);
+		contentPane.add(btnXML);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
