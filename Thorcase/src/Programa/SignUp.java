@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -111,7 +114,7 @@ public class SignUp extends JFrame {
 		JButton btnComprobarUsuario = new JButton("Passw check");
 		btnComprobarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(String.valueOf(password1.getText()).compareTo(String.valueOf(passwordRepeat.getText())) == 0) {
+				if(String.valueOf(password1.getText()).equals(String.valueOf(passwordRepeat.getText()))) {
 					JOptionPane.showMessageDialog(null, "Las contraseñas coinciden", "Password Checker", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Password Checker", JOptionPane.ERROR_MESSAGE);
@@ -149,6 +152,43 @@ public class SignUp extends JFrame {
 		singUpFrame.add(lblRepeatPassword);
 		
 		JButton btnNewButton = new JButton("Register");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(TxtUser.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Debes introducir un nombre de usuario.", "Error", JOptionPane.WARNING_MESSAGE);
+				} else if((String.valueOf(password1.getText())).equals("")) {
+					JOptionPane.showMessageDialog(null, "Debes introducir una contraseña.", "Error", JOptionPane.WARNING_MESSAGE);
+				} else if((String.valueOf(passwordRepeat.getText())).equals("")) {
+					JOptionPane.showMessageDialog(null, "Debes introducir la contraseña repetida.", "Error", JOptionPane.WARNING_MESSAGE);
+				} else {
+					if(String.valueOf(password1.getText()).equals(String.valueOf(passwordRepeat.getText()))) {
+						try {
+							Connection connect = null;
+					        
+						    Class.forName("com.mysql.cj.jdbc.Driver");
+						    connect = DriverManager
+				                   .getConnection("jdbc:mysql://localhost/thorcase?"
+				                           + "user=root&password=1234"
+				                   		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+						    
+						    CallableStatement cstmt =  connect.prepareCall("{call thorcase.sp_insertarUsuario(?, ?)}");
+						    
+						    cstmt.setString(1, TxtUser.getText());
+						    cstmt.setString(2, String.valueOf(password1.getText()));
+						                
+						    cstmt.execute();		            
+						    cstmt.close();
+
+				            
+						 } catch (Exception e) {
+							 JOptionPane.showMessageDialog(null, e, "Error en el registro", JOptionPane.ERROR_MESSAGE);
+					     }
+					} else {
+						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			}
+		});
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(new Color(41, 76, 255));
 		btnNewButton.setBounds(344, 340, 289, 32);

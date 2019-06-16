@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -13,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -48,8 +53,8 @@ public class Skins extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Skins(String idUser) {
-		this.idUser = idUser;
+	public Skins(String iduser) {
+		this.idUser = iduser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
@@ -128,6 +133,50 @@ public class Skins extends JFrame {
 		contentPane.add(comboBox);
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					for (int j=0;j<table.getRowCount();j++) {
+		            	table.setValueAt(null, j, 0);
+		            	table.setValueAt(null, j, 1);
+		        	 	table.setValueAt(null, j, 2);
+		        	 	table.setValueAt(null, j, 3);
+					}
+					
+					String consulta= "select Nombre, Rareza, Precio, Arma from skins where Arma= '"+ comboBox.getSelectedItem().toString() + "';";
+					Connection connect = null;
+					Statement query = null;
+					
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					
+		            connect = DriverManager
+		                    .getConnection("jdbc:mysql://localhost/thorcase?"
+		                            + "user=root&password=1234"
+		                    		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+
+		            query =connect.createStatement();
+		            ResultSet resultado = query.executeQuery(consulta);
+
+		            int i=0;
+		          
+		            while(resultado.next()) {
+		            	String vnombre= resultado.getString(1);
+		            	table.setValueAt(vnombre, i, 0);
+		            	String vrareza=resultado.getString(2);
+		            	table.setValueAt(vrareza, i, 1);
+		        	 	Double vprecio=resultado.getDouble(3);
+		        	 	table.setValueAt(vprecio, i, 2);
+		        	 	String varma=resultado.getString(4);
+		        	 	table.setValueAt(varma, i, 3);
+		        	 	i++;
+		            }
+		            
+
+					}catch(Exception ex) {
+						JOptionPane.showMessageDialog(null, ex, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);
+					}
+			}
+		});
 		btnSearch.setForeground(Color.WHITE);
 		btnSearch.setBackground(new Color(41, 76, 255));
 		btnSearch.setBounds(301, 153, 133, 20);

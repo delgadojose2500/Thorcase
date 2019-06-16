@@ -54,7 +54,7 @@ public class Shop extends JFrame {
 	 * Create the frame.
 	 */
 	public Shop(String iduser) {
-		this.idUser = idUser;
+		this.idUser = iduser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
@@ -154,6 +154,46 @@ public class Shop extends JFrame {
 		contentPane.add(lblCantidad);
 		
 		JButton btnComprar = new JButton("Buy");
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection connect = null;
+			        
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+				    connect = DriverManager
+		                   .getConnection("jdbc:mysql://localhost/thorcase?"
+		                           + "user=root&password=1234"
+		                   		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+				    
+				    CallableStatement cstmt =  connect.prepareCall("{call thorcase.sp_comprarCajas(?, ?, ?)}");
+		            String cajaNom = "";
+				    if(comboBoxCajas.getSelectedIndex() == 0) {
+				    	cajaNom = "Caja_Horizonte";
+				    }else if(comboBoxCajas.getSelectedIndex() == 1) {
+				    	cajaNom = "Caja_Bravo";
+				    }else if(comboBoxCajas.getSelectedIndex() == 2) {
+				    	cajaNom = "Caja_Espectro";
+				    }else if(comboBoxCajas.getSelectedIndex() == 3) {
+				    	cajaNom = "Caja_Clutch";
+				    }else if(comboBoxCajas.getSelectedIndex() == 4) {
+				    	cajaNom = "Caja_Delta";
+				    }
+				    
+				    cstmt.setString(1, idUser);
+				    cstmt.setString(2, cajaNom);
+				    cstmt.setInt(3, comboBoxCant.getSelectedIndex()+1);  
+				    cstmt.execute();
+				    
+				              
+				    cstmt.close();
+				    
+				    JOptionPane.showMessageDialog(null, "Compra realizada con éxito", "Info", JOptionPane.INFORMATION_MESSAGE);
+		            
+				 } catch (Exception ex) {
+					 JOptionPane.showMessageDialog(null, ex, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);
+			     }
+			}
+		});
 		btnComprar.setForeground(Color.WHITE);
 		btnComprar.setBackground(Color.RED);
 		btnComprar.setBounds(446, 166, 102, 21);
@@ -196,9 +236,9 @@ public class Shop extends JFrame {
 				    cstmt.close();
 
 		            
-				 } catch (Exception e) {
-					 JOptionPane.showMessageDialog(null, e, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);
-			        }
+				 } catch (Exception exc) {
+					 JOptionPane.showMessageDialog(null, exc, "Error al conectar con la BD", JOptionPane.ERROR_MESSAGE);
+			     }
 			}
 		});
 		btnVerPrecio.setForeground(Color.WHITE);

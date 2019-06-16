@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -48,7 +52,7 @@ public class Inventory extends JFrame {
 	 * Create the frame.
 	 */
 	public Inventory(String iduser) {
-		this.idUser = idUser;
+		this.idUser = iduser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 180, 700, 473);
 		setUndecorated(true);
@@ -119,21 +123,55 @@ public class Inventory extends JFrame {
 		panel.setBounds(0, 0, 700, 85);
 		contentPane.add(panel);
 		
+		int cajasHor = 0;
+		int cajasBrav = 0;
+		int cajasEsp = 0;
+		int cajasClut = 0;
+		int cajasDel = 0;
+		
+		try {
+			Connection connect = null;
+			Statement query = null;
+	        
+			String consulta = "select Caja_Horizonte, Caja_Bravo, Caja_Espectro, Caja_Clutch, Caja_Delta from inventario where"
+					+ " idUsuario = '" + iduser + "';";
+			
+		    Class.forName("com.mysql.cj.jdbc.Driver");
+		    connect = DriverManager
+                   .getConnection("jdbc:mysql://localhost/thorcase?"
+                           + "user=root&password=1234"
+                   		+ "&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+		    
+		    query =connect.createStatement();//enviar consulta a bbdd
+	        ResultSet resultado=  query.executeQuery(consulta);
+		    
+	        if(resultado.next()) {
+	        	cajasHor = resultado.getInt(1);
+	    		cajasBrav = resultado.getInt(2);
+	    		cajasEsp = resultado.getInt(3);
+	    		cajasClut = resultado.getInt(4);
+	    		cajasDel = resultado.getInt(5);
+	        }
+            
+		 } catch (Exception e) {
+			 JOptionPane.showMessageDialog(null, e, "Error en el inventario.", JOptionPane.ERROR_MESSAGE);
+	     }
+		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Horizonte", null},
-				{"Bravo", null},
-				{"Espectro", null},
-				{"Clutch", null},
-				{"Delta", null},
+				{"Horizonte", cajasHor},
+				{"Bravo", cajasBrav},
+				{"Espectro", cajasEsp},
+				{"Clutch", cajasClut},
+				{"Delta", cajasDel},
 			},
 			new String[] {
 				"Cajas", "Cantidad"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, true
+				false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];

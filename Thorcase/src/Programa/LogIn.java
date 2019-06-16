@@ -167,12 +167,16 @@ public class LogIn extends JFrame {
 			        		dispose();
 			        		Inventory inventario = new Inventory(idUser);
 			        		inventario.setVisible(true);
+			        	} else {
+			        		JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
 			        	}
+			        } else {
+			        	JOptionPane.showMessageDialog(null, "Usuario no encontrado, registrese.", "Error", JOptionPane.ERROR_MESSAGE);
 			        }
 		            
 				 } catch (Exception e) {
-					 JOptionPane.showMessageDialog(null, e, "Error al iniciar sesion", JOptionPane.ERROR_MESSAGE);
-			        }
+					 JOptionPane.showMessageDialog(null, e, "Error al iniciar sesion.", JOptionPane.ERROR_MESSAGE);
+			     }
 			}
 		});
 		btnLogIn.setForeground(Color.WHITE);
